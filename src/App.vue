@@ -1,17 +1,24 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <fuck-offer-operation v-for="operation in $store.state.operations" v-bind:key="operation.name"
+                          v-bind:operation="operation" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import FuckOfferOperation from './components/FuckOfferOperation.vue'
+import Axios from 'axios'
 
 export default {
   name: 'App',
+  mounted () {
+    console.log(this.$store.state)
+    Axios.get(`${this.$store.state.baseUrl}/operations`)
+         .then((response) => this.$store.state.operations = response.data
+                                                           .filter((o) => o.name !== "Version"))
+  },
   components: {
-    HelloWorld
+    FuckOfferOperation
   }
 }
 </script>
