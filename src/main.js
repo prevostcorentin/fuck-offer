@@ -12,20 +12,21 @@ const store = new Vuex.Store({
   state: {
     baseUrl: "https://www.foaas.com",
     operations: undefined,
-    avalaibleLocales: ['fr', 'ar', 'ru', 'es', 'gr'],
+    avalaibleLocales: ['fr', 'ar', 'ru', 'es', 'en', 'hr'],
+    flagLocale: {'fr': 'fr', 'ar': 'ar', 'ru': 'ru', 'es': 'es', 'en': 'gb', 'hr': 'hr'},
     parameters: ['Mister', 'Me'],
     translation: {
       endpoint: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0",
-      key: 'ea799cf50b1646a2a7de2ccf6e760acd',
+      key: '',
       locale: 'fr',
       message: undefined,
       rawMessage: undefined
     },
     speech: {
       defaultSpeechLocale: 'fr-FR',
-      key: 'ac1ea54be432432ab3b146c6d5b0e175',
+      key: '',
       region: 'westeurope',
-      voices: { 'fr': 'fr-FR', 'ru': 'ru-RU', 'es': 'es-ES', 'ar': 'ar-EG', 'gr': 'el-GR' },
+      voices: { 'fr': 'fr-FR', 'ru': 'ru-RU', 'es': 'es-ES', 'ar': 'ar-EG', 'en': 'en-US', 'hr': 'hr-HR' },
       userPhrase: undefined
     }
   },
@@ -75,7 +76,6 @@ const store = new Vuex.Store({
         if (result.text !== undefined) {
           state.speech.userPhrase = result.text
         }
-        console.log(state.speech.userPhrase)
       });
     }
   },

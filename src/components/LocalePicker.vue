@@ -9,7 +9,7 @@
 	export default {
 		computed: {
 			imageUrl () {
-        return `https://www.countryflags.io/${this.locale}/shiny/64.png`
+        return `https://www.countryflags.io/${this.$store.state.flagLocale[this.locale]}/shiny/64.png`
       }
 		},
 		props: {

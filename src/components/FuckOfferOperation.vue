@@ -18,11 +18,13 @@
 					</div>
 				</div>
 			</div>
-			{{ message }}
+			<div class="message" v-if="message != undefined">
+				{{ message }}
+			</div>
 			<footer class="card-footer">
 				<a href="#" class="card-footer-item" v-on:click="fetch">Fetch</a>
 				<a href="#" class="card-footer-item" v-on:click="$store.dispatch('say')">Say</a>
-				<a href="#" class="card-footer-item" v-on:click="listen">Listen</a>
+				<a href="#" class="card-footer-item" v-on:click="$store.dispatch('listen')">Listen</a>
 			</footer>
 		</div>
 	</div>
@@ -63,9 +65,6 @@ import Axios from 'axios'
             })
 				}
 			},
-			listen() {
-        console.log('listen')
-      }
 		},
 		props: {
 			operation: Object
