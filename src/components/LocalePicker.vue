@@ -1,6 +1,6 @@
 <template>
   <span :class=locale>
-		<a href="#" v-on:click="$store.commit('updateLocale', locale)"><img :src=imageUrl></a>
+		<a href="#" v-on:click="$store.dispatch('changeLocale', locale)"><img :src=imageUrl></a>
   </span>
 </template>
 

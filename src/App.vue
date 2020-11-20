@@ -4,7 +4,12 @@
       <locale-picker v-for="locale in $store.state.avalaibleLocales" v-bind:key="locale"
                      v-bind:locale="locale" />
     </div>
-    {{ $store.state.translation.message }}
+    <div class="content is-medium">
+      {{ $store.state.translation.message }}
+    </div>
+    <div class="content is-medium">
+      {{ $store.state.speech.userPhrase }}
+    </div>
     <fuck-offer-operation v-for="operation in $store.state.operations" v-bind:key="operation.name"
                           v-bind:operation="operation" />
   </div>
