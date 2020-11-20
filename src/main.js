@@ -12,8 +12,8 @@ const store = new Vuex.Store({
   state: {
     baseUrl: "https://www.foaas.com",
     operations: undefined,
-    avalaibleLocales: ['fr', 'ar', 'ru', 'es', 'en', 'hr'],
-    flagLocale: {'fr': 'fr', 'ar': 'ar', 'ru': 'ru', 'es': 'es', 'en': 'gb', 'hr': 'hr'},
+    avalaibleLocales: ['fr', 'ar', 'ru', 'es', 'en', 'hr', 'zh-Hant'],
+    flagLocale: {'fr': 'fr', 'ar': 'ar', 'ru': 'ru', 'es': 'es', 'en': 'gb', 'hr': 'hr', 'zh-Hant': 'hk' },
     parameters: ['Mister', 'Me'],
     translation: {
       endpoint: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0",
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
       defaultSpeechLocale: 'fr-FR',
       key: '',
       region: 'westeurope',
-      voices: { 'fr': 'fr-FR', 'ru': 'ru-RU', 'es': 'es-ES', 'ar': 'ar-EG', 'en': 'en-US', 'hr': 'hr-HR' },
+      voices: { 'fr': 'fr-FR', 'ru': 'ru-RU', 'es': 'es-ES', 'ar': 'ar-EG', 'en': 'en-US', 'hr': 'hr-HR', 'zh-Hant': 'zh-HK' },
       userPhrase: undefined
     }
   },
