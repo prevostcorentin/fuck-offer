@@ -1,70 +1,53 @@
 <template>
   <div id="app">
-    <h1 class="title">Greumeur</h1>
-    <h1 class="subtitle">Apprenez la grammaire des gueux !</h1>
-    <div id="locales">
-      <h3 class="title">Choisissez un langage pour votre gueux</h3>
-      <locale-picker v-for="locale in $store.state.avalaibleLocales" v-bind:key="locale"
-                     v-bind:locale="locale" />
-    </div>
-    <div class="container" v-if="!isNaN(score)">
-      <h3 class="title">
-        Votre score !
-      </h3>
-      <div class="notification is-info">
-        Score: {{ score }}
-      </div>
-    </div>
-    <div class="container" v-if="$store.state.translation.message != undefined">
-      <div class="notification is-danger">
-        Le gueux: {{ $store.state.translation.message }}
-      </div>
-    </div>
-    <div class="content" v-if="$store.state.speech.userPhrase != undefined">
-      <div class="notification is-primary">
-        Vous: {{ $store.state.speech.userPhrase }}
-      </div>
-    </div>
-    <div class="content">
+    <div class="container">
+      <h1 class="title">Greumeur</h1>
+      <h1 class="subtitle">Apprenez le gueux en toutes langues !</h1>
       <h3 class="title">
         Structures
       </h3>
-      <fuck-offer-operation v-for="operation in $store.state.operations" v-bind:key="operation.name"
-                            v-bind:operation="operation" />
+      <operation v-for="operation in operations" v-bind:key="operation.name"
+                 v-bind:operation="operation" 
+                 v-bind:translationEndpoint="`${translation.endpoint}&Subscription-Key=${translation.key}&to=${translation.locale}`"
+                 v-bind:availableLocales="availableLocales"/>
     </div>
   </div>
 </template>
 
 <script>
-  import FuckOfferOperation from './components/FuckOfferOperation.vue'
-  import LocalePicker from './components/LocalePicker.vue'
+  import Operation from './components/Operation.vue'
   import Axios from 'axios'
 
   export default {
     name: 'App',
-    mounted() {
-      Axios.get(`${this.$store.state.baseUrl}/operations`)
-        .then((response) => this.$store.state.operations = response.data
-          .filter((o) => o.name !== "Version"))
-    },
-    computed: {
-      score () {
-        let apiMessageLength = (this.$store.state.translation.message != undefined) ? this.$store.state.translation.message.length : 0
-        let userMessageLength = (this.$store.state.speech.userPhrase != undefined) ? this.$store.state.speech.userPhrase.length : 0
-        let matches = 0
-        let maxLength = (apiMessageLength > userMessageLength) ? userMessageLength : apiMessageLength
-        for (let i = 0; i < maxLength; i++) {
-          if (this.$store.state.translation.message[i] === this.$store.state.speech.userPhrase[i]) {
-            matches += 1
-          }
+    data () {
+      return {
+        fooasUrl: "https://www.foaas.com",
+        operations: undefined,
+        availableLocales: ['fr', 'ar', 'ru', 'es', 'en', 'hr', 'zh-Hant'],
+        flagLocale: { 'fr': 'fr', 'ar': 'ar', 'ru': 'ru', 'es': 'es', 'en': 'gb', 'hr': 'hr', 'zh-Hant': 'hk' },
+        translation: {
+          endpoint: "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0",
+          key: process.env.VUE_APP_AZURE_TRANSLATOR_API_KEY,
+          message: undefined,
+          rawMessage: undefined
+        },
+        speech: {
+          defaultSpeechLocale: 'fr-FR',
+          key: process.env.VUE_APP_AZURE_SPEECH_API_KEY,
+          region: 'westeurope',
+          voices: { 'fr': 'fr-FR', 'ru': 'ru-RU', 'es': 'es-ES', 'ar': 'ar-EG', 'en': 'en-US', 'hr': 'hr-HR', 'zh-Hant': 'zh-HK' },
+          userPhrase: undefined
         }
-        let score = (matches / maxLength) * 100
-        return score
       }
     },
+    mounted() {
+      Axios.get(`${this.fooasUrl}/operations`)
+        .then((response) => this.operations = response.data
+          .filter((o) => o.name !== "Version"))
+    },
     components: {
-      FuckOfferOperation,
-      LocalePicker
+      Operation
     }
   }
 </script>
